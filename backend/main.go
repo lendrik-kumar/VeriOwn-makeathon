@@ -4,6 +4,7 @@ import (
 	"backend/controllers"
 	"backend/middlewares"
 	"backend/models"
+	"backend/utils"
 	"fmt"
 	"os"
 	"time"
@@ -23,6 +24,13 @@ func main() {
 	if err != nil {
 		fmt.Println("Warning: .env file not found, using system environment variables")
 	}
+
+	// Initialize IPFS connection
+	ipfsNodeURL := os.Getenv("IPFS_NODE_URL")
+	if ipfsNodeURL == "" {
+		ipfsNodeURL = "localhost:5001" // Default local node
+	}
+	utils.InitIPFSShell(ipfsNodeURL)
 
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -80,9 +88,13 @@ func main() {
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
 		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
 
+		//get product!
+		authorized.GET("/api/user/products", controllers.GetUserProducts)
+
 		// Owner contract endpoints
 		authorized.GET("/api/products/:id/contracts", controllers.GetProductContracts)
 		authorized.GET("/api/contracts/:id/pdf", controllers.GetContractPDF)
+		authorized.GET("/api/contracts/:id/ipfs", controllers.GetContractIPFSLink)
 		authorized.POST("/api/contracts/:id/regenerate", controllers.RegenerateContractPDF)
 	}
 

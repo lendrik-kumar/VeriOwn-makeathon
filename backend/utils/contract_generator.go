@@ -79,7 +79,13 @@ func GenerateOwnerContract(db *gorm.DB, productID, ownerID, previousOwnerID uint
 		return nil, fmt.Errorf("failed to generate PDF: %w", err)
 	}
 
-	// Create the contract record
+	// Upload to IPFS
+	cid, err := UploadToIPFS(pdfPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to upload to IPFS: %w", err)
+	}
+
+	// Create the contract record with IPFS CID
 	contract := &models.OwnerContract{
 		ProductID:       productID,
 		OwnerID:         ownerID,
@@ -88,13 +94,18 @@ func GenerateOwnerContract(db *gorm.DB, productID, ownerID, previousOwnerID uint
 		TransferDate:    contractData.TransferDate,
 		DocumentData:    string(jsonData),
 		ContractNumber:  contractData.ContractNumber,
-		PDFPath:         pdfPath,
+		PDFPath:         pdfPath, // Keep local path for backup
+		IPFSCID:         cid,     // Store IPFS hash
+		IsEncrypted:     false,   // Not encrypted in this implementation
 	}
 
 	// Save to database
 	if err := db.Create(contract).Error; err != nil {
 		return nil, fmt.Errorf("failed to save contract: %w", err)
 	}
+
+	// Optionally, remove local file after successful upload
+	// os.Remove(pdfPath)
 
 	return contract, nil
 }

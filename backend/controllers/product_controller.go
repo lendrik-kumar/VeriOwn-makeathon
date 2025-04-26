@@ -218,3 +218,79 @@ func ConfirmTransfer(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+// GetUserProducts returns all products owned by the currently logged in user
+func GetUserProducts(c *gin.Context) {
+	userID, _ := c.Get("user_id")
+
+	// Find all contracts where the user is the current owner
+	var contracts []models.OwnerContract
+	if err := db.Where("owner_id = ?", userID).Find(&contracts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch user's contracts"})
+		return
+	}
+
+	// Extract product IDs from the contracts
+	var productIDs []uint
+	for _, contract := range contracts {
+		productIDs = append(productIDs, contract.ProductID)
+	}
+
+	// If user doesn't own any products, return empty array
+	if len(productIDs) == 0 {
+		c.JSON(http.StatusOK, gin.H{"products": []string{}})
+		return
+	}
+
+	// Find products by their IDs
+	var products []models.Product
+	if err := db.Where("id IN ?", productIDs).Find(&products).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
+		return
+	}
+
+	// Prepare response with products and their contracts
+	response := make([]gin.H, 0)
+	for _, product := range products {
+		// Find the contract for this product
+		var productContracts []models.OwnerContract
+		if err := db.Where("product_id = ? AND owner_id = ?", product.ID, userID).
+			Order("created_at DESC").Find(&productContracts).Error; err != nil {
+			continue // Skip if contract can't be found
+		}
+
+		// Skip if no contracts found (shouldn't happen based on our query)
+		if len(productContracts) == 0 {
+			continue
+		}
+
+		// Use the most recent contract
+		latestContract := productContracts[0]
+
+		// Generate IPFS URLs
+		ipfsGatewayURL := ""
+		if latestContract.IPFSCID != "" {
+			ipfsGatewayURL = fmt.Sprintf("https://ipfs.io/ipfs/%s", latestContract.IPFSCID)
+		}
+
+		// Add to response
+		productData := gin.H{
+			"id":            product.ID,
+			"serial_number": product.SerialNumber,
+			"manufacturer":  product.Manufacturer,
+			"model":         product.ProductModel,
+			"created_at":    product.CreatedAt,
+			"contract": gin.H{
+				"id":              latestContract.ID,
+				"contract_number": latestContract.ContractNumber,
+				"transfer_date":   latestContract.TransferDate,
+				"ipfs_cid":        latestContract.IPFSCID,
+				"ipfs_url":        ipfsGatewayURL,
+			},
+		}
+
+		response = append(response, productData)
+	}
+
+	c.JSON(http.StatusOK, gin.H{"products": response})
+}
