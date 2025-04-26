@@ -95,3 +95,12 @@ export const getPendingTransfers = async () => {
     throw error.response?.data || { error: 'Failed to fetch pending transfers' };
   }
 };
+
+export const getUserProducts = async () => {
+  try {
+    const response = await api.get('/api/user/products');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to fetch user products' };
+  }
+};

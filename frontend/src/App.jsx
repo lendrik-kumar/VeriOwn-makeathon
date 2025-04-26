@@ -12,6 +12,7 @@ import Transfer from "./pages/main/CreateTransfer"
 import ProductDetail from "./pages/main/ProductDetail"
 import CreateProductEvent from "./pages/main/CreateProductEvent"
 import ApproveTransfer from "./pages/main/ApproveTransfer"
+import UserProducts from "./pages/main/UserProducts"
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="product-detail" element = {<ProductDetail/>} ></Route>
           <Route path="create-event" element = {<CreateProductEvent/>} ></Route>
           <Route path="approve-transfer" element = {<ApproveTransfer/>} ></Route>
+          <Route path="products" element = {<UserProducts/>} ></Route>
       </Routes>
     </Router>
   )
