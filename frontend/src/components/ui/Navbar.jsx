@@ -92,7 +92,7 @@ function Navbar() {
                   backgroundColor: 'rgba(0,0,0,0.98)',
                   backdropFilter: 'blur(10px)',
                   borderRadius: '12px',
-                  boxShadow: '0 10px 30px rgba(99,102,241,0.15)',
+                  boxShadow: '0 10px 30px rgba(99,102,241,0.1)',
                   border: '1px solid rgba(55,65,81,0.3)',
                   mt: 1.5,
                   overflow: 'hidden',
