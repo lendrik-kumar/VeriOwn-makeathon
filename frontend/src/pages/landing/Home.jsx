@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFolder, FaChartBar, FaWallet, FaUsers, FaDownload, FaStar, FaHeart, FaBolt, FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import SplineModel from '../../components/splineModel';
 import Navbar from '../../components/ui/Navbar'; // Import Navbar
 
@@ -34,6 +35,8 @@ const cards = [
 ];
 
 const Landing = () => {
+  const navigate = useNavigate(); // Add this line
+
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-black text-white">
       {/* Navbar */}
@@ -56,7 +59,10 @@ const Landing = () => {
           </h1>
 
           {/* Get Started Button */}
-          <button className="mb-12 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-bold px-8 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all duration-200">
+          <button
+            className="mb-12 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-bold px-8 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all duration-200"
+            onClick={() => navigate('/signup')}
+          >
             Get Started <FaArrowRight />
           </button>
 
