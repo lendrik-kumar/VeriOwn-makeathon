@@ -38,7 +38,7 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&models.User{}, &models.Product{}, &models.Event{}, &models.PendingTransfer{})
+	db.AutoMigrate(&models.User{}, &models.Product{}, &models.Event{}, &models.PendingTransfer{}, &models.OwnerContract{})
 
 	r := gin.Default()
 
@@ -79,6 +79,11 @@ func main() {
 		authorized.GET("/api/admin/verifications/pending", controllers.GetPendingVerifications)
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
 		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
+
+		// Owner contract endpoints
+		authorized.GET("/api/products/:id/contracts", controllers.GetProductContracts)
+		authorized.GET("/api/contracts/:id/pdf", controllers.GetContractPDF)
+		authorized.POST("/api/contracts/:id/regenerate", controllers.RegenerateContractPDF)
 	}
 
 	r.Run(":8080")
