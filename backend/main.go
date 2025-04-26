@@ -4,10 +4,13 @@ import (
 	"backend/controllers"
 	"backend/middlewares"
 	"backend/models"
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -15,8 +18,21 @@ import (
 var db *gorm.DB
 
 func main() {
-	dsn := "root:Vaidik@2005@tcp(localhost:3306)/productverify?charset=utf8mb4&parseTime=True&loc=Local"
-	var err error
+	// Load environment variables from .env file
+	err := godotenv.Load("../.env") // <-- Adjusted path for your structure
+	if err != nil {
+		fmt.Println("Warning: .env file not found, using system environment variables")
+	}
+
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbUser, dbPassword, dbHost, dbPort, dbName)
+
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
