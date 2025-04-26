@@ -86,3 +86,12 @@ export const createProductEvent = async (productId, eventData) => {
     throw error.response?.data || { error: 'Failed to create event' };
   }
 };
+
+export const getPendingTransfers = async () => {
+  try {
+    const response = await api.get('/api/transfers/pending');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to fetch pending transfers' };
+  }
+};

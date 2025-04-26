@@ -79,6 +79,7 @@ func main() {
 		authorized.GET("/api/products/:id", controllers.GetProduct)
 		authorized.POST("/api/products/:id/events", controllers.CreateEvent)
 		authorized.POST("/api/products/:id/transfer", controllers.InitiateTransfer)
+		authorized.GET("/api/transfers/pending", controllers.GetPendingTransfersForUser)
 		authorized.POST("/api/products/:id/transfer/confirm", controllers.ConfirmTransfer)
 		authorized.GET("/api/products/:id/verify", controllers.VerifyProductHistory)
 
@@ -87,7 +88,6 @@ func main() {
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
 		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
 		// Add this to your authorized routes in main.go
-		authorized.GET("/api/transfers/pending", controllers.GetPendingTransfersForUser)
 
 		//get product!
 		authorized.GET("/api/user/products", controllers.GetUserProducts)
