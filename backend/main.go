@@ -4,7 +4,9 @@ import (
 	"backend/controllers"
 	"backend/middlewares"
 	"backend/models"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -24,9 +26,22 @@ func main() {
 
 	r := gin.Default()
 
+	// Configure CORS middleware
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173", "https://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	controllers.InitUserController(db)
 	controllers.InitProductController(db)
 	controllers.InitEventController(db)
+
+	// Public product verification endpoint (no auth required)
+	r.GET("/api/products/public/:id", controllers.GetPublicProductInfo)
 
 	// User registration endpoints - role-specific
 	r.POST("/api/users/register/regular", controllers.RegisterRegularUser)
@@ -47,6 +62,7 @@ func main() {
 		// Admin verification endpoints
 		authorized.GET("/api/admin/verifications/pending", controllers.GetPendingVerifications)
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
+		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
 	}
 
 	r.Run(":8080")
