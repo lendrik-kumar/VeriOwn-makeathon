@@ -6,16 +6,14 @@ import Navbar from '../../components/ui/Navbar'; // Import Navbar
 
 const cards = [
   {
-    color: 'bg-[#6616CA]/50', // Reduced opacity for translucency
+    color: 'bg-[#00BD79]/60', // Reduced opacity for translucency
     icon: <FaFolder size={20} />,
-    title: 'File Manager',
-    users: '5.2k',
-    downloads: '9,04,012+',
-    rating: 4.9,
+    title: 'NFT Verification',
+    users: 'Leverage blockchain technology to verify and secure your digital assets with NFTs, ensuring authenticity and ownership.',
     ratingIcon: <FaHeart className="text-black" />,
   },
   {
-    color: 'bg-[#b400f5]/50', // Reduced opacity for translucency
+    color: 'bg-[#00AED1]/60', // Reduced opacity for translucency
     icon: <FaChartBar size={20} />,
     title: 'Analytics Data',
     users: '9.2k',
@@ -24,7 +22,7 @@ const cards = [
     ratingIcon: <FaStar className="text-black" />,
   },
   {
-    color: 'bg-[#C838CE]/40', // Reduced opacity for translucency
+    color: 'bg-[#006FEF]/40', // Reduced opacity for translucency
     icon: <FaWallet size={20} />,
     title: 'Wallet Feature',
     users: '4.8k',
@@ -52,15 +50,15 @@ const Landing = () => {
         <div className="relative z-10 p-8 flex flex-col items-center min-h-screen">
           {/* Heading */}
           <h1 className="text-5xl md:text-6xl font-bold text-center mb-6 leading-tight mt-0">
-            Get the <span className="inline-flex items-center gap-2 text-green-400">
-              <FaBolt className="inline-block" /> Application
-            </span> you<br />
-            Want for <span className="underline decoration-yellow-400">Growth</span>
+          Explore the Future of <span className="inline-flex items-center gap-2 text-green-300 ">
+              <FaBolt className="inline-block" /> Verification
+            </span><br />
+            with NFTs
           </h1>
 
           {/* Get Started Button */}
           <button
-            className="mb-12 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-bold px-8 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all duration-200"
+            className="mb-6 mt-20 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-bold px-8 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all duration-200"
             onClick={() => navigate('/signup')}
           >
             Get Started <FaArrowRight />
@@ -87,7 +85,7 @@ const Landing = () => {
                 className={`p-6 rounded-2xl ${card.color} shadow-lg flex flex-col gap-4 min-h-[220px] relative`}
               >
                 {/* Icon & Rating */}
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between h-8 items-center mb-2">
                   <span className="bg-white/30 rounded-full p-2 text-black">{card.icon}</span>
                   <span className="flex items-center gap-1 bg-white/30 rounded-full px-3 py-1 text-black font-bold text-sm">
                     {card.ratingIcon} {card.rating}
