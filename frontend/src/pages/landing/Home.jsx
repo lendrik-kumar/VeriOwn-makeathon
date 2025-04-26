@@ -6,8 +6,8 @@ import Navbar from '../../components/ui/Navbar'; // Import Navbar
 
 const cards = [
   {
-    color: 'bg-green-400/80',
-    icon: <FaFolder size={32} />,
+    color: 'bg-[#6616CA]/50', // Reduced opacity for translucency
+    icon: <FaFolder size={20} />,
     title: 'File Manager',
     users: '5.2k',
     downloads: '9,04,012+',
@@ -15,8 +15,8 @@ const cards = [
     ratingIcon: <FaHeart className="text-black" />,
   },
   {
-    color: 'bg-yellow-300/80',
-    icon: <FaChartBar size={32} />,
+    color: 'bg-[#b400f5]/50', // Reduced opacity for translucency
+    icon: <FaChartBar size={20} />,
     title: 'Analytics Data',
     users: '9.2k',
     downloads: '1,00,000+',
@@ -24,8 +24,8 @@ const cards = [
     ratingIcon: <FaStar className="text-black" />,
   },
   {
-    color: 'bg-blue-400/80',
-    icon: <FaWallet size={32} />,
+    color: 'bg-[#C838CE]/40', // Reduced opacity for translucency
+    icon: <FaWallet size={20} />,
     title: 'Wallet Feature',
     users: '4.8k',
     downloads: '70,800+',
