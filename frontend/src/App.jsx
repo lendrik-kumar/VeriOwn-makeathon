@@ -1,5 +1,5 @@
 import SplineModel from "./components/splineModel"
-import { BrowserRouter as Router , Routes , Route } from "react-router-dom"
+import { BrowserRouter as Router , Routes , Route, Navigate, Outlet } from "react-router-dom"
 import Compiler from './components/Compiler'
 import Home from './pages/landing/Home'
 import Signup from "./pages/auth/Signup"
@@ -13,10 +13,15 @@ import ProductDetail from "./pages/main/ProductDetail"
 import CreateProductEvent from "./pages/main/CreateProductEvent"
 import ApproveTransfer from "./pages/main/ApproveTransfer"
 import UserProducts from "./pages/main/UserProducts"
+import UserLayout from './layouts/UserLayout';
+import Dashboard from './pages/dashboard/dashboard';
 
+const ProtectedRoute = () => {
+  const token = localStorage.getItem('token');
+  return token ? <Outlet /> : <Navigate to="/" replace />;
+};
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -28,12 +33,19 @@ function App() {
           <Route path="contact" element={<Contact/>}></Route>
           <Route path="view-requests" element={<ViewAdminRequests/>}></Route>
         </Route>
-          <Route path="register" element={<Register/>}></Route>
-          <Route path="create-transfer" element = {<Transfer/>} ></Route>
-          <Route path="product-detail" element = {<ProductDetail/>} ></Route>
-          <Route path="create-event" element = {<CreateProductEvent/>} ></Route>
-          <Route path="approve-transfer" element = {<ApproveTransfer/>} ></Route>
-          <Route path="products" element = {<UserProducts/>} ></Route>
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<UserLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/approve-transfers" element={<ApproveTransfer />} />
+            <Route path="/user-products" element={<UserProducts />} />
+            <Route path="/register-product" element={<Register />} />
+            <Route path="/product-detail" element={<ProductDetail />} />
+            <Route path="/create-event" element={<CreateProductEvent />} />
+            <Route path="/create-transfer" element={<Transfer />} />
+            <Route path="/approve-transfer" element={<ApproveTransfer />} />
+          </Route>
+        </Route>
       </Routes>
     </Router>
   )

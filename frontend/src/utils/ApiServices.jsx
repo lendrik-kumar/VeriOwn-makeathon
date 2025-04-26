@@ -139,3 +139,12 @@ export const regenerateContractPDF = async (contractId) => {
     throw error.response?.data || { error: 'Failed to regenerate contract PDF' };
   }
 };
+
+export const getUserInfo = async () => {
+  try {
+    const response = await api.get('/api/user/info');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to fetch user info' };
+  }
+};
