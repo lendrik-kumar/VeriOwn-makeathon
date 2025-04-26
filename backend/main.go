@@ -88,6 +88,9 @@ func main() {
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
 		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
 
+		//get product!
+		authorized.GET("/api/user/products", controllers.GetUserProducts)
+
 		// Owner contract endpoints
 		authorized.GET("/api/products/:id/contracts", controllers.GetProductContracts)
 		authorized.GET("/api/contracts/:id/pdf", controllers.GetContractPDF)
