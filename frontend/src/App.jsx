@@ -10,6 +10,7 @@ import Contact from "./pages/landing/Contact"
 import Register from './pages/main/Register'
 import Transfer from "./pages/main/transfer"
 import ProductDetail from "./pages/main/ProductDetail"
+import CreateProductEvent from "./pages/main/CreateProductEvent"
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="register" element={<Register/>}></Route>
           <Route path="transfer-ownership" element = {<Transfer/>} ></Route>
           <Route path="product-detail" element = {<ProductDetail/>} ></Route>
+          <Route path="create-event" element = {<CreateProductEvent/>} ></Route>
       </Routes>
     </Router>
   )

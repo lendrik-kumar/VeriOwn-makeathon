@@ -77,3 +77,12 @@ export const getPublicProductInfo = async (productId) => {
     throw error.response?.data || { error: 'Failed to get public product info' };
   }
 };
+
+export const createProductEvent = async (productId, eventData) => {
+  try {
+    const response = await api.post(`/api/products/${productId}/events`, eventData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to create event' };
+  }
+};
