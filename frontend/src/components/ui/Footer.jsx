@@ -10,11 +10,11 @@ const Footer = () => {
           {/* Brand column */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-lg mr-3">
+              <div className="bg-gradient-to-r from-green-400 to-blue-500 p-2 rounded-lg mr-3">
                 <FaFingerprint className="text-white text-2xl" />
               </div>
-              <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-                ProofNest
+              <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
+                VeriOwn
               </h2>
             </div>
             <p className="text-gray-400 mb-2 max-w-md">
@@ -83,16 +83,16 @@ const Footer = () => {
             <p className="text-gray-400 mb-2">Have a question?</p>
             <a
               href="mailto:support@proofnest.com"
-              className="text-indigo-400 hover:text-purple-400 transition-colors font-medium"
+              className="text-green-400 to-blue-500 hover:text-purple-400 transition-colors font-medium"
             >
-              support@proofnest.com
+              support@VeriOwn.com
             </a>
           </div>
         </div>
 
         <div className="border-t border-[#2e2e3a] mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} ProofNest. All rights reserved.
+            &copy; {new Date().getFullYear()} VeriOwn. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <p className="text-gray-500 text-sm">

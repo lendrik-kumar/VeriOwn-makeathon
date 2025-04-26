@@ -6,28 +6,24 @@ import Navbar from '../../components/ui/Navbar'; // Import Navbar
 
 const cards = [
   {
-    color: 'bg-[#00BD79]/60', // Reduced opacity for translucency
+    color: 'bg-[#00CFF5]/20',
     icon: <FaFolder size={20} />,
-    title: 'NFT Verification',
-    users: 'Leverage blockchain technology to verify and secure your digital assets with NFTs, ensuring authenticity and ownership.',
+    title: 'Focused on Consumer Benefits',
+    users: 'Full product visibility through a decentralized warranty and history ledger — no lost receipts, no hidden issues, no hassle.',
     ratingIcon: <FaHeart className="text-black" />,
   },
   {
-    color: 'bg-[#00AED1]/60', // Reduced opacity for translucency
+    color: 'bg-[#A259FF]/40', // Reduced opacity for translucency
     icon: <FaChartBar size={20} />,
-    title: 'Analytics Data',
-    users: '9.2k',
-    downloads: '1,00,000+',
-    rating: 5.0,
+    title: 'Straightforward',
+    users: 'A decentralized ledger for tracking warranties, repairs, ownership, and service history — boosting trust, cutting fraud, and streamlining after-sales service.',
     ratingIcon: <FaStar className="text-black" />,
   },
   {
-    color: 'bg-[#006FEF]/40', // Reduced opacity for translucency
+    color: 'bg-[#00F58C]/30', // Reduced opacity for translucency
     icon: <FaWallet size={20} />,
-    title: 'Wallet Feature',
-    users: '4.8k',
-    downloads: '70,800+',
-    rating: 3.2,
+    title: 'Visionary ',
+    users: 'A transparent, tamper-proof record of every products journey, empowering true ownership and trust through decentralized technology.',
     ratingIcon: <FaHeart className="text-black" />,
   },
 ];
@@ -87,26 +83,15 @@ const Landing = () => {
                 {/* Icon & Rating */}
                 <div className="flex justify-between h-8 items-center mb-2">
                   <span className="bg-white/30 rounded-full p-2 text-black">{card.icon}</span>
-                  <span className="flex items-center gap-1 bg-white/30 rounded-full px-3 py-1 text-black font-bold text-sm">
-                    {card.ratingIcon} {card.rating}
-                  </span>
                 </div>
                 <h2 className="text-xl font-semibold">{card.title}</h2>
                 <div className="flex justify-between text-sm mt-2">
                   <span className="flex items-center gap-1">
                     <FaUsers className="inline-block" /> {card.users}
                   </span>
-                  <span className="flex items-center gap-1">
-                    <FaDownload className="inline-block" /> {card.downloads}
-                  </span>
+                  
                 </div>
                 <div className="flex justify-between items-center mt-4">
-                  <button className="bg-black/80 text-white font-semibold px-4 py-2 rounded-full">
-                    Download APP
-                  </button>
-                  <button className="bg-white text-black font-semibold px-4 py-2 rounded-full flex items-center gap-1">
-                    Get <FaArrowRight />
-                  </button>
                 </div>
               </div>
             ))}
