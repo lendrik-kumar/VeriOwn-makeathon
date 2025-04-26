@@ -10,10 +10,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Compiler/>}>
+        {/* <Route path="/" element={<Compiler/>}> */}
           <Route path="Home" element={<Landing/>}></Route>
           <Route path="signup" element={<Signup/>}></Route>
-        </Route>
+        {/* </Route> */}
       </Routes>
     </Router>
   )
