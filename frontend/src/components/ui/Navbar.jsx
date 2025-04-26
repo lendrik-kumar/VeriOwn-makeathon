@@ -170,7 +170,7 @@ function Navbar() {
                   fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.2rem',
-                  background: 'linear-gradient(90deg, #5eead4 0%, #3b82f6 100%)', // updated gradient
+                  background: 'linear-gradient(to right, #22c55e, #3b82f6)', // updated gradient
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   textDecoration: 'none',
@@ -233,12 +233,12 @@ function Navbar() {
                   fontSize: '1rem',
                   textTransform: 'none',
                   borderRadius: '999px',
-                  background: 'linear-gradient(90deg, #5eead4 0%, #3b82f6 100%)', // updated gradient
+                  background: 'linear-gradient(to right, #22c55e, #3b82f6)', // updated gradient
                   boxShadow: '0 6px 20px -6px rgba(59,130,246,0.30)',
                   border: 'none',
                   transition: 'all 0.25s cubic-bezier(.4,0,.2,1)',
                   '&:hover': {
-                    background: 'linear-gradient(90deg, #22d3ee 0%, #2563eb 100%)', // reversed for hover
+                    background: 'linear-gradient(to right, #22c55e, #3b82f6)', // reversed for hover
                     boxShadow: '0 10px 28px -8px rgba(59,130,246,0.35)',
                   },
                 }}

@@ -5,7 +5,7 @@ import { FaFingerprint, FaGithub, FaTwitter, FaLinkedinIn } from 'react-icons/fa
 const Footer = () => {
   return (
     <footer className="bg-[#18181b] border-t border-[#2e2e3a]">
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand column */}
           <div className="md:col-span-2">
@@ -17,7 +17,7 @@ const Footer = () => {
                 ProofNest
               </h2>
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
+            <p className="text-gray-400 mb-2 max-w-md">
               Secure your creative works with blockchain verification. ProofNest provides tamper-proof certification for your digital assets.
             </p>
             <div className="flex space-x-4">

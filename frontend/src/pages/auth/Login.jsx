@@ -44,8 +44,6 @@ function Login() {
         {/* Left Section - Login Form */}
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
           <div className="mb-8 flex items-center gap-3">
-            <div className="bg-gradient-to-tr from-purple-600 to-indigo-500 text-white w-11 h-11 rounded-full flex items-center justify-center font-bold text-2xl shadow-lg border-2 border-[#232136]">V</div>
-            <span className="font-extrabold text-2xl tracking-wide text-white">VeriOwn</span>
           </div>
 
           <h1 className="text-3xl font-extrabold mb-2 text-white tracking-tight">Welcome back</h1>
@@ -87,7 +85,7 @@ function Login() {
                 />
                 <label htmlFor="remember" className="text-gray-400">Remember me</label>
               </div>
-              <a href="#" className="text-indigo-400 hover:underline">Forgot password?</a>
+              <a href="#" className="text-green-400 hover:underline">Forgot password?</a>
             </div>
 
             <button
@@ -107,7 +105,7 @@ function Login() {
 
           <div className="mt-8 text-gray-400 text-sm text-center">
             Don't have an account?{' '}
-            <a href="/signup" className="text-indigo-400 hover:underline font-semibold">
+            <a href="/signup" className="text-green-400 hover:underline font-semibold">
               Sign up
             </a>
           </div>
@@ -117,7 +115,7 @@ function Login() {
         <div className="hidden md:flex w-1/2 flex-col justify-center items-center bg-gradient-to-br from-[#232136] via-[#18181b] to-[#0f0f13] relative">
           <div className="absolute inset-0 bg-gradient-to-br from-[#232136] via-[#18181b] to-[#0f0f13] opacity-90"></div>
           <div className="relative z-10 flex flex-col items-center p-8">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 mb-8 shadow-xl flex items-center justify-center">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-blue-500 mb-8 shadow-xl flex items-center justify-center">
               <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
               </svg>
@@ -125,25 +123,25 @@ function Login() {
             <h2 className="text-2xl font-bold mb-6 text-white text-center">Secure Authentication</h2>
             <ul className="space-y-4 text-gray-300">
               <li className="flex items-center">
-                <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center mr-3">
+                <div className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center mr-3">
                   <span className="text-white text-xs">✓</span>
                 </div>
                 <span>Verify product authenticity</span>
               </li>
               <li className="flex items-center">
-                <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center mr-3">
+                <div className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center mr-3">
                   <span className="text-white text-xs">✓</span>
                 </div>
                 <span>Track ownership history</span>
               </li>
               <li className="flex items-center">
-                <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center mr-3">
+                <div className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center mr-3">
                   <span className="text-white text-xs">✓</span>
                 </div>
                 <span>Secure transfer process</span>
               </li>
               <li className="flex items-center">
-                <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center mr-3">
+                <div className="w-6 h-6 rounded-full bg-green-400 flex items-center justify-center mr-3">
                   <span className="text-white text-xs">✓</span>
                 </div>
                 <span>Blockchain-inspired verification</span>

@@ -71,8 +71,7 @@ const Signup = () => {
         {/* Left Section - Sign Up Form */}
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
           <div className="mb-8 flex items-center gap-3">
-            <div className="bg-gradient-to-tr from-purple-600 to-indigo-500 text-white w-11 h-11 rounded-full flex items-center justify-center font-bold text-2xl shadow-lg border-2 border-[#232136]">V</div>
-            <span className="font-extrabold text-2xl tracking-wide text-white">VeriOwn</span>
+            
           </div>
 
           <h1 className="text-3xl font-extrabold mb-2 text-white tracking-tight">Create your account</h1>
@@ -238,7 +237,7 @@ const Signup = () => {
                 </div>
               </>
             )}
-
+            
             <button
               type="submit"
               className="bg-gradient-to-r from-purple-600 to-indigo-500 text-white p-3 rounded-lg font-bold mt-2 shadow-lg hover:scale-105 hover:shadow-purple-800/40 transition-all duration-200"
@@ -253,7 +252,7 @@ const Signup = () => {
 
           <div className="mt-8 text-gray-400 text-sm text-center">
             Already have an account?{' '}
-            <a href="/login" className="text-indigo-400 hover:underline font-semibold">
+            <a href="/login" className="text-green-400 hover:underline font-semibold">
               Log in
             </a>
           </div>
@@ -265,9 +264,6 @@ const Signup = () => {
           <div className="relative z-10 flex flex-col items-center">
             <div className="flex mb-6">
               <div className="flex -space-x-4">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="w-12 h-12 rounded-full border-2 border-purple-700 overflow-hidden shadow-lg bg-gradient-to-tr from-purple-600 to-indigo-500 opacity-80"></div>
-                ))}
               </div>
             </div>
             <h2 className="text-2xl font-bold mb-3 text-white">People love VeriOwn</h2>
