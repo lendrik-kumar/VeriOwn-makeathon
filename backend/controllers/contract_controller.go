@@ -4,6 +4,7 @@ import (
 	"backend/models"
 	"backend/utils"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -45,21 +46,36 @@ func GetContractPDF(c *gin.Context) {
 		return
 	}
 
-	// Check permissions
+	// Check permissions - only owner, previous owner, or admin can access
 	role, _ := c.Get("role")
 	if role != "admin" && contract.OwnerID != userID.(uint) && contract.PreviousOwnerID != userID.(uint) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "You don't have permission to view this contract"})
 		return
 	}
 
-	// Check if file exists
-	if _, err := os.Stat(contract.PDFPath); os.IsNotExist(err) {
-		c.JSON(http.StatusNotFound, gin.H{"error": "PDF file not found"})
+	// Check if we have an IPFS CID
+	if contract.IPFSCID == "" {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Contract not stored on IPFS"})
+		return
+	}
+
+	// Create a temporary file to hold the downloaded content
+	tempFile, err := os.CreateTemp("", "contract-*.pdf")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create temporary file"})
+		return
+	}
+	defer os.Remove(tempFile.Name()) // Clean up temp file after serving
+
+	// Download from IPFS to the temporary file
+	if err := utils.DownloadFromIPFS(contract.IPFSCID, tempFile.Name()); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve from IPFS: " + err.Error()})
 		return
 	}
 
 	// Serve the file
-	c.FileAttachment(contract.PDFPath, filepath.Base(contract.PDFPath))
+	filename := fmt.Sprintf("contract-%s.pdf", contract.ContractNumber)
+	c.FileAttachment(tempFile.Name(), filename)
 }
 
 // RegenerateContractPDF recreates the PDF for a contract (useful if the PDF is missing)
@@ -111,4 +127,40 @@ func RegenerateContractPDF(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "PDF regenerated successfully"})
+}
+
+// GetContractIPFSLink provides the IPFS link for a specific contract
+func GetContractIPFSLink(c *gin.Context) {
+	contractID := c.Param("id")
+	userID, _ := c.Get("user_id")
+
+	var contract models.OwnerContract
+	if err := db.First(&contract, contractID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Contract not found"})
+		return
+	}
+
+	// Check permissions - only owner, previous owner, or admin can access
+	role, _ := c.Get("role")
+	if role != "admin" && contract.OwnerID != userID.(uint) && contract.PreviousOwnerID != userID.(uint) {
+		c.JSON(http.StatusForbidden, gin.H{"error": "You don't have permission to view this contract"})
+		return
+	}
+
+	// Check if we have an IPFS CID
+	if contract.IPFSCID == "" {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Contract not stored on IPFS"})
+		return
+	}
+
+	// Generate gateway URLs (for easier access in browsers)
+	ipfsNativeURL := fmt.Sprintf("ipfs://%s", contract.IPFSCID)
+	ipfsGatewayURL := fmt.Sprintf("https://ipfs.io/ipfs/%s", contract.IPFSCID)
+
+	c.JSON(http.StatusOK, gin.H{
+		"contract_number": contract.ContractNumber,
+		"ipfs_cid":        contract.IPFSCID,
+		"ipfs_url":        ipfsNativeURL,
+		"gateway_url":     ipfsGatewayURL,
+	})
 }
