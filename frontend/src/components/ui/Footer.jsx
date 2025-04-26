@@ -4,7 +4,7 @@ import { FaFingerprint, FaGithub, FaTwitter, FaLinkedinIn } from 'react-icons/fa
 
 const Footer = () => {
   return (
-    <footer className="bg-[#18181b] border-t border-[#2e2e3a]">
+    <footer className="bg-black border-t border-[#2e2e3a]">
       <div className="container mx-auto px-6 py-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand column */}
