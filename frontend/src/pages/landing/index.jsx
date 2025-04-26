@@ -1,61 +1,111 @@
 import React from 'react';
+import { FaFolder, FaChartBar, FaWallet, FaUsers, FaDownload, FaStar, FaHeart, FaBolt, FaArrowRight } from 'react-icons/fa';
 import SplineModel from '../../components/splineModel';
+import Navbar from '../../components/ui/Navbar'; // Import Navbar
+
+const cards = [
+  {
+    color: 'bg-green-400/80',
+    icon: <FaFolder size={32} />,
+    title: 'File Manager',
+    users: '5.2k',
+    downloads: '9,04,012+',
+    rating: 4.9,
+    ratingIcon: <FaHeart className="text-black" />,
+  },
+  {
+    color: 'bg-yellow-300/80',
+    icon: <FaChartBar size={32} />,
+    title: 'Analytics Data',
+    users: '9.2k',
+    downloads: '1,00,000+',
+    rating: 5.0,
+    ratingIcon: <FaStar className="text-black" />,
+  },
+  {
+    color: 'bg-blue-400/80',
+    icon: <FaWallet size={32} />,
+    title: 'Wallet Feature',
+    users: '4.8k',
+    downloads: '70,800+',
+    rating: 3.2,
+    ratingIcon: <FaHeart className="text-black" />,
+  },
+];
 
 const Landing = () => {
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-black text-white">
-      {/* Background Spline Model */}
-      <div className="absolute inset-0 z-0">
-        <SplineModel />
-      </div>
-
-      {/* Foreground Content */}
-      <div className="relative z-10 p-8 flex flex-col items-center">
-        {/* Heading */}
-        <h1 className="text-5xl font-bold text-center mb-10 leading-tight">
-          Get the <span className="text-green-400">Application</span> you<br />Want for Growthhj
-        </h1>
-
-        {/* Search Bar */}
-        <div className="w-full max-w-xl bg-white bg-opacity-10 backdrop-blur-md rounded-full p-3 flex items-center mb-16">
-          <input
-            type="text"
-            placeholder="Search API, Apps & Plugin"
-            className="bg-transparent outline-none text-white w-full px-4 placeholder-white"
-          />
-          <span className="px-4">⌘F</span>
+      {/* Navbar */}
+      <Navbar />
+      {/* Add top padding to prevent overlap */}
+      <div className="pt-16">
+        {/* Background Spline Model */}
+        <div className="absolute inset-0 z-0">
+          <SplineModel />
         </div>
 
-        {/* Marketplace Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
-          {/* Card 1 */}
-          <div className="p-6 rounded-2xl bg-white bg-opacity-10 backdrop-blur-md flex flex-col gap-4">
-            <h2 className="text-xl font-semibold">File Manager</h2>
-            <p>Total Users: 5.2k</p>
-            <p>Downloads: 9,04,012+</p>
-            <button className="bg-green-500 text-black font-semibold px-4 py-2 rounded-full w-max mt-auto">
-              Download App
-            </button>
+        {/* Foreground Content */}
+        <div className="relative z-10 p-8 flex flex-col items-center min-h-screen">
+          {/* Heading */}
+          <h1 className="text-5xl md:text-6xl font-bold text-center mb-6 leading-tight mt-0">
+            Get the <span className="inline-flex items-center gap-2 text-green-400">
+              <FaBolt className="inline-block" /> Application
+            </span> you<br />
+            Want for <span className="underline decoration-yellow-400">Growth</span>
+          </h1>
+
+          {/* Get Started Button */}
+          <button className="mb-12 bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-bold px-8 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all duration-200">
+            Get Started <FaArrowRight />
+          </button>
+
+          {/* Spacer to push cards to bottom */}
+          <div className="flex-grow" />
+
+          {/* Explore Marketplace Title & Filters */}
+          <div className="flex w-full max-w-6xl justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold"></h2>
+            <div className="flex gap-2">
+              <button className="bg-white/10 text-white px-4 py-1 rounded-full font-medium border border-white/20">Featured</button>
+              <button className="bg-white/5 text-white px-4 py-1 rounded-full font-medium border border-white/10">Popular</button>
+              <button className="ml-2 bg-white text-black rounded-full p-2 shadow"><FaArrowRight /></button>
+            </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="p-6 rounded-2xl bg-white bg-opacity-10 backdrop-blur-md flex flex-col gap-4">
-            <h2 className="text-xl font-semibold">Analytics Data</h2>
-            <p>Total Users: 9.2k</p>
-            <p>Downloads: 1,00,000+</p>
-            <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-full w-max mt-auto">
-              Download App
-            </button>
-          </div>
-
-          {/* Card 3 */}
-          <div className="p-6 rounded-2xl bg-white bg-opacity-10 backdrop-blur-md flex flex-col gap-4">
-            <h2 className="text-xl font-semibold">Wallet Feature</h2>
-            <p>Total Users: 4.8k</p>
-            <p>Downloads: 70,800+</p>
-            <button className="bg-blue-400 text-black font-semibold px-4 py-2 rounded-full w-max mt-auto">
-              Download App
-            </button>
+          {/* Marketplace Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mb-8">
+            {cards.map((card, idx) => (
+              <div
+                key={card.title}
+                className={`p-6 rounded-2xl ${card.color} shadow-lg flex flex-col gap-4 min-h-[220px] relative`}
+              >
+                {/* Icon & Rating */}
+                <div className="flex justify-between items-center mb-2">
+                  <span className="bg-white/30 rounded-full p-2 text-black">{card.icon}</span>
+                  <span className="flex items-center gap-1 bg-white/30 rounded-full px-3 py-1 text-black font-bold text-sm">
+                    {card.ratingIcon} {card.rating}
+                  </span>
+                </div>
+                <h2 className="text-xl font-semibold">{card.title}</h2>
+                <div className="flex justify-between text-sm mt-2">
+                  <span className="flex items-center gap-1">
+                    <FaUsers className="inline-block" /> {card.users}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <FaDownload className="inline-block" /> {card.downloads}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mt-4">
+                  <button className="bg-black/80 text-white font-semibold px-4 py-2 rounded-full">
+                    Download APP
+                  </button>
+                  <button className="bg-white text-black font-semibold px-4 py-2 rounded-full flex items-center gap-1">
+                    Get <FaArrowRight />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
