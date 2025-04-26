@@ -61,7 +61,6 @@ func main() {
 	}))
 
 	controllers.InitUserController(db)
-	controllers.InitProductController(db)
 	controllers.InitEventController(db)
 
 	// Public product verification endpoint (no auth required)
@@ -87,6 +86,8 @@ func main() {
 		authorized.GET("/api/admin/verifications/pending", controllers.GetPendingVerifications)
 		authorized.POST("/api/admin/verify-user/:id", controllers.VerifyUser)
 		authorized.GET("/api/products/:id/qr", controllers.GenerateProductQR)
+		// Add this to your authorized routes in main.go
+		authorized.GET("/api/transfers/pending", controllers.GetPendingTransfersForUser)
 
 		//get product!
 		authorized.GET("/api/user/products", controllers.GetUserProducts)

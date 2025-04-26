@@ -294,3 +294,36 @@ func GetUserProducts(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"products": response})
 }
+
+// Add this function to your product_controller.go file
+
+// GetPendingTransfersForUser retrieves all pending transfers for the current authenticated user
+func GetPendingTransfersForUser(c *gin.Context) {
+    userID, _ := c.Get("user_id")
+    
+    var pendingTransfers []struct {
+        models.PendingTransfer
+        ProductModel string
+        Manufacturer string
+        SerialNumber string
+        CurrentOwnerUsername string
+    }
+    
+    // Join queries to get relevant product and user information
+    err := db.Table("pending_transfers").
+        Select("pending_transfers.*, products.product_model, products.manufacturer, products.serial_number, users.username as current_owner_username").
+        Joins("JOIN products ON pending_transfers.product_id = products.id").
+        Joins("JOIN events ON products.id = events.product_id AND events.event_type = 'registration'").
+        Joins("JOIN users ON events.created_by = users.id").
+        Where("pending_transfers.new_owner_id = ?", userID).
+        Find(&pendingTransfers).Error
+    
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve pending transfers"})
+        return
+    }
+    
+    c.JSON(http.StatusOK, gin.H{
+        "pending_transfers": pendingTransfers,
+    })
+}
