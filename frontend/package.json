@@ -17,6 +17,7 @@
     "@splinetool/react-spline": "^4.0.0",
     "@tailwindcss/vite": "^4.1.4",
     "axios": "^1.9.0",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.9.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -9,6 +9,7 @@ import About from './pages/landing/About'
 import Contact from "./pages/landing/Contact"
 import Register from './pages/main/Register'
 import Transfer from "./pages/main/transfer"
+import ProductDetail from "./pages/main/ProductDetail"
 
 
 function App() {
@@ -24,8 +25,9 @@ function App() {
           <Route path="contact" element={<Contact/>}></Route>
           <Route path="view-requests" element={<ViewAdminRequests/>}></Route>
         </Route>
-        <Route path="register" element={<Register/>}></Route>
+          <Route path="register" element={<Register/>}></Route>
           <Route path="transfer-ownership" element = {<Transfer/>} ></Route>
+          <Route path="product-detail" element = {<ProductDetail/>} ></Route>
       </Routes>
     </Router>
   )
