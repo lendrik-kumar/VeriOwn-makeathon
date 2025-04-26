@@ -10,9 +10,6 @@ const Footer = () => {
           {/* Brand column */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <div className="bg-gradient-to-r from-green-400 to-blue-500 p-2 rounded-lg mr-3">
-                <FaFingerprint className="text-white text-2xl" />
-              </div>
               <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
                 VeriOwn
               </h2>
