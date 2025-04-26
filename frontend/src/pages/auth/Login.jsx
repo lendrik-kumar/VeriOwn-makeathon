@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../../components/ui/Navbar';
+import Footer from '../../components/ui/Footer';
 
 function Login() {
   const [form, setForm] = useState({
@@ -34,6 +36,8 @@ function Login() {
   };
 
   return (
+    <>
+
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#18181b] via-[#232136] to-[#0f0f13]">
       <div className="flex w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl bg-[#18181b] bg-opacity-95 border border-[#232136]">
         {/* Left Section - Login Form */}
@@ -148,6 +152,8 @@ function Login() {
         </div>
       </div>
     </div>
+
+    </>
   );
 }
 

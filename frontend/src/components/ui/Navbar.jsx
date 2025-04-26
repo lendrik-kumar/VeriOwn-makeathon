@@ -34,7 +34,7 @@ function Navbar() {
   const handleCloseNavMenu = () => setAnchorElNav(null);
 
   const handleNavClick = (page) => {
-    if (page === "Home") navigate('/');
+    if (page === "Home") navigate('/home');
     else if (page === "Verify") navigate('/verify');
     else if (page === "Register" || page === "Register-Asset") navigate('/register');
     else navigate(`/${page.toLowerCase()}`);
@@ -75,7 +75,7 @@ function Navbar() {
                 transition={{ duration: 3, repeat: Infinity }}
               />
               <div className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-lg">
-                <FaFingerprint className="text-white text-xl" />
+                <FaFingerprint  className="text-white text-xl" />
               </div>
             </div>
           </motion.div>
@@ -179,7 +179,7 @@ function Navbar() {
                 variant="h5"
                 noWrap
                 component="a"
-                href="/"
+                href="/home"
                 sx={{
                   fontFamily: 'monospace',
                   fontWeight: 700,
