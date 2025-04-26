@@ -153,7 +153,7 @@ const CreateProductEvent = () => {
   
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar />
+
       
       <div className="container mx-auto px-4 pt-20 pb-10">
         <div className="flex items-center mb-6">

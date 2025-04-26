@@ -301,6 +301,5 @@ func GetUserInfo(c *gin.Context) {
 		"id":       user.ID,
 		"username": user.Username,
 		"role":     user.Role,
-		// add more fields if needed
 	})
 }

@@ -1,58 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaCheckCircle, FaSearch } from 'react-icons/fa';
-import Navbar from '../../components/ui/Navbar';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaArrowLeft, FaCheckCircle } from 'react-icons/fa';
 import { getProduct } from '../../utils/ApiServices';
 import { format } from 'date-fns';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  
-  // Product ID input state
-  const [productId, setProductId] = useState('');
-  const [searching, setSearching] = useState(false);
-  const [searchError, setSearchError] = useState('');
+  const { id } = useParams(); // Get product ID from URL params
   
   // Product data state
   const [product, setProduct] = useState(null);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [productFound, setProductFound] = useState(false);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    // Function to fetch product data
+    const fetchProductData = async () => {
+      if (!id) {
+        setError('No product ID provided');
+        setLoading(false);
+        return;
+      }
 
-    if (!productId.trim()) {
-      setSearchError('Please enter a product ID');
-      return;
-    }
+      try {
+        const response = await getProduct(id);
+        setProduct(response.product);
+        setHistory(response.history || []);
+      } catch (err) {
+        setError(err.error || 'Failed to load product details');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Check auth token
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login', { state: { from: '/product-search' } });
-      return;
-    }
-
-    setLoading(true);
-    setSearching(true);
-    setSearchError('');
-    setError(null);
-    
-    try {
-      const response = await getProduct(productId.trim());
-      setProduct(response.product);
-      setHistory(response.history || []);
-      setProductFound(true);
-    } catch (err) {
-      setError(err.error || 'Failed to load product details');
-      setProductFound(false);
-    } finally {
-      setLoading(false);
-      setSearching(false);
-    }
-  };
+    fetchProductData();
+  }, [id]); // Re-fetch if ID changes
 
   // Format event data for display
   const formatEventData = (event) => {
@@ -89,8 +72,6 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar />
-      
       <div className="container mx-auto px-4 pt-20 pb-10">
         <div className="flex items-center mb-6">
           <button 
@@ -99,55 +80,7 @@ const ProductDetail = () => {
           >
             <FaArrowLeft className="text-white" />
           </button>
-          <h1 className="text-3xl font-bold">Product Search & Details</h1>
-        </div>
-        
-        {/* Product ID Search Form */}
-        <div className="p-6 bg-white/5 rounded-lg border border-white/10 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Search for a Product</h2>
-          
-          <form onSubmit={handleSearch} className="space-y-4">
-            <div>
-              <label htmlFor="productId" className="block text-sm font-medium mb-2">
-                Product ID
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="productId"
-                  value={productId}
-                  onChange={(e) => setProductId(e.target.value)}
-                  placeholder="Enter product ID"
-                  className="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              {searchError && (
-                <p className="mt-1 text-sm text-red-400">{searchError}</p>
-              )}
-            </div>
-            
-            <button
-              type="submit"
-              disabled={searching || !productId.trim()}
-              className={`px-4 py-3 rounded-lg flex items-center justify-center ${
-                searching || !productId.trim() 
-                  ? 'bg-gray-700 text-gray-300 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
-              }`}
-            >
-              {searching ? (
-                <div className="flex items-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-t-transparent border-current mr-2"></div>
-                  <span>Searching...</span>
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  <FaSearch className="mr-2" />
-                  <span>Search Product</span>
-                </div>
-              )}
-            </button>
-          </form>
+          <h1 className="text-3xl font-bold">Product Details</h1>
         </div>
         
         {/* Product Details Section */}
@@ -160,7 +93,7 @@ const ProductDetail = () => {
             <h2 className="text-xl font-medium text-red-400 mb-2">Error</h2>
             <p>{error}</p>
           </div>
-        ) : product && productFound ? (
+        ) : product ? (
           <div className="space-y-8">
             {/* Product Info */}
             <div className="p-6 bg-white/5 rounded-lg border border-white/10">
@@ -297,12 +230,9 @@ const ProductDetail = () => {
             </div>
           </div>
         ) : (
-          !loading && !searching && !productFound && (
-            <div className="flex flex-col items-center justify-center py-12 text-center text-gray-400">
-              <FaSearch className="text-4xl opacity-50 mb-4" />
-              <p className="text-xl">Enter a product ID and click Search to view product details</p>
-            </div>
-          )
+          <div className="p-6 bg-white/5 rounded-lg border border-white/10 text-center">
+            <p>No product found with the provided ID.</p>
+          </div>
         )}
       </div>
     </div>

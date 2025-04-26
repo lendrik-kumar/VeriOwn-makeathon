@@ -15,6 +15,9 @@ import ApproveTransfer from "./pages/main/ApproveTransfer"
 import UserProducts from "./pages/main/UserProducts"
 import UserLayout from './layouts/UserLayout';
 import Dashboard from './pages/dashboard/dashboard';
+import ProductDetailsPub from "./pages/main/ProductDetailPub"
+import UserProfile from "./pages/landing/UserProfile"
+
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem('token');
@@ -40,12 +43,14 @@ function App() {
             <Route path="/approve-transfers" element={<ApproveTransfer />} />
             <Route path="/user-products" element={<UserProducts />} />
             <Route path="/register-product" element={<Register />} />
-            <Route path="/product-detail" element={<ProductDetail />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/create-event" element={<CreateProductEvent />} />
             <Route path="/create-transfer" element={<Transfer />} />
             <Route path="/approve-transfer" element={<ApproveTransfer />} />
+            <Route path="/profile" element={<UserProfile />} />
           </Route>
         </Route>
+        <Route path="/verify/:id" element={<ProductDetailsPub/>}></Route>
       </Routes>
     </Router>
   )

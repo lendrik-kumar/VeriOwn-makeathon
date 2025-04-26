@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { getUserProducts, getContractPDF, getContractIPFSLink, regenerateContractPDF } from '../../utils/ApiServices';
 import { Link } from 'react-router-dom';
-import { FaFileContract, FaSyncAlt, FaBoxOpen } from 'react-icons/fa';
+import { FaFileContract, FaSyncAlt, FaBoxOpen, FaQrcode } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { QRCodeSVG } from 'qrcode.react';
 
 const UserProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [processingIds, setProcessingIds] = useState(new Set());
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [currentQRProduct, setCurrentQRProduct] = useState(null);
+
+  // Get the current origin (domain) for the QR code URL
+  const origin = window.location.origin;
 
   useEffect(() => {
     fetchUserProducts();
@@ -84,6 +90,79 @@ const UserProducts = () => {
         newSet.delete(`regen-${contractId}`);
         return newSet;
       });
+    }
+  };
+
+  // Function to show QR code modal
+  const handleShowQRCode = (product) => {
+    setCurrentQRProduct(product);
+    setShowQRModal(true);
+  };
+
+  // Function to download QR code
+  const handleDownloadQR = () => {
+    if (!currentQRProduct) return;
+    
+    // Get the SVG element
+    const svgElement = document.getElementById('product-qr-code');
+    if (!svgElement) {
+      toast.error('Could not find QR code element');
+      return;
+    }
+    
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas dimensions to match SVG
+    canvas.width = svgElement.clientWidth;
+    canvas.height = svgElement.clientHeight;
+    
+    // Create an image from the SVG
+    const img = new Image();
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    
+    img.onload = () => {
+      // Draw image on canvas
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+      
+      // Convert canvas to PNG
+      try {
+        const pngUrl = canvas.toDataURL('image/png');
+        
+        // Create download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = `${currentQRProduct.model.replace(/\s+/g, '-')}_${currentQRProduct.serial_number}_verify.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Clean up
+        URL.revokeObjectURL(svgUrl);
+      } catch (err) {
+        console.error('Error generating PNG:', err);
+        toast.error('Failed to generate downloadable image');
+      }
+    };
+    
+    img.onerror = () => {
+      console.error('Error loading SVG as image');
+      toast.error('Failed to process QR code for download');
+      URL.revokeObjectURL(svgUrl);
+    };
+    
+    img.src = svgUrl;
+  };
+
+  // Close modal when clicking outside
+  const handleModalBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowQRModal(false);
     }
   };
 
@@ -176,13 +255,20 @@ const UserProducts = () => {
                   </div>
                 )}
 
-                <div className="mt-4">
+                <div className="mt-4 grid grid-cols-2 gap-2">
                   <Link 
                     to={`/products/${product.id}`}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-black font-bold rounded-full shadow hover:from-green-500 hover:to-blue-600 transition text-center"
+                    className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-black font-bold rounded-full shadow hover:from-green-500 hover:to-blue-600 transition text-center text-sm"
                   >
                     View Details
                   </Link>
+                  
+                  <button
+                    onClick={() => handleShowQRCode(product)}
+                    className="flex items-center justify-center gap-1 px-4 py-2 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold rounded-full shadow hover:from-purple-500 hover:to-pink-600 transition text-sm"
+                  >
+                    <FaQrcode /> QR Code
+                  </button>
                 </div>
               </div>
             ))}
@@ -197,6 +283,59 @@ const UserProducts = () => {
           </button>
         </div>
       </div>
+
+      {/* QR Code Modal */}
+      {showQRModal && currentQRProduct && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={handleModalBackdropClick}
+        >
+          <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 max-w-md w-full">
+            <h3 className="text-2xl font-bold text-center mb-2">Product QR Code</h3>
+            <p className="text-center text-gray-300 mb-6">
+              {currentQRProduct.manufacturer} {currentQRProduct.model}
+            </p>
+            
+            <div className="flex justify-center bg-white p-6 rounded-lg mb-6">
+              <QRCodeSVG 
+                id="product-qr-code"
+                value={`${origin}/verify/${currentQRProduct.id}`}
+                size={250}
+                level="H"
+                includeMargin={true}
+                imageSettings={{
+                  src: "https://via.placeholder.com/40x40.png?text=VO",
+                  x: undefined,
+                  y: undefined,
+                  height: 40,
+                  width: 40,
+                  excavate: true,
+                }}
+              />
+            </div>
+            
+            <div className="text-center text-sm text-gray-400 mb-4">
+              Scan this QR code to verify product authenticity and view product details
+            </div>
+            
+            <div className="flex gap-4">
+              <button
+                onClick={() => setShowQRModal(false)}
+                className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+              >
+                Close
+              </button>
+              <button
+                onClick={handleDownloadQR}
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-green-400 text-black font-bold rounded-lg hover:from-blue-600 hover:to-green-500 transition"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Animations */}
       <style>
         {`
