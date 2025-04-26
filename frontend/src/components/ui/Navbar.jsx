@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FaFingerprint, FaArrowRight } from 'react-icons/fa';
 
-const pages = [ "About", "Blog", "Contact"];
+const pages = [ "About", "Contact"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
