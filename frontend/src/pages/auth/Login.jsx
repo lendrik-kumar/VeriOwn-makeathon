@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../../components/ui/Navbar';
-import Footer from '../../components/ui/Footer';
+
 
 function Login() {
   const [form, setForm] = useState({
