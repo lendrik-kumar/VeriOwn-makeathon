@@ -66,7 +66,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#18181b] via-[#232136] to-[#0f0f13]">
+    <div className="min-h-screen flex items-center pt-20 justify-center bg-gradient-to-br from-[#18181b] via-[#232136] to-[#0f0f13]">
       <div className="flex w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl bg-[#18181b] bg-opacity-95 border border-[#232136]">
         {/* Left Section - Sign Up Form */}
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">

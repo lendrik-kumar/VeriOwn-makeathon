@@ -34,7 +34,7 @@ function Navbar() {
   const handleCloseNavMenu = () => setAnchorElNav(null);
 
   const handleNavClick = (page) => {
-    if (page === "Home") navigate('/');
+    if (page === "Home") navigate('/home');
     else if (page === "Verify") navigate('/verify');
     else if (page === "Register" || page === "Register-Asset") navigate('/register');
     else navigate(`/${page.toLowerCase()}`);
@@ -62,24 +62,7 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.5, type: "spring" }}
-            style={{ display: 'flex', alignItems: 'center' }}
-          >
-            <div className="relative mr-2">
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full opacity-30 blur-md"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              <div className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full shadow-lg">
-                <FaFingerprint className="text-white text-xl" />
-              </div>
-            </div>
-          </motion.div>
-
+          {/* Removed logo section */}
           {/* Mobile menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -128,12 +111,12 @@ function Navbar() {
                     mx: 1,
                     my: 0.5,
                     background: isActive(page)
-                      ? 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)'
+                      ? 'linear-gradient(90deg, #5eead4 0%, #3b82f6 100%)'
                       : 'transparent',
                     color: isActive(page) ? 'white' : '#e5e7eb',
                     fontWeight: isActive(page) ? 700 : 400,
                     '&:hover': {
-                      background: 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)',
+                      background: 'linear-gradient(90deg, #22d3ee 0%, #2563eb 100%)',
                       color: 'white',
                     },
                   }}
@@ -159,7 +142,10 @@ function Navbar() {
                   background: 'linear-gradient(90deg, #5eead4 0%, #3b82f6 100%)', // updated gradient
                   m: 1,
                   borderRadius: '8px',
-                  '&:hover': { opacity: 0.9 }
+                  '&:hover': {
+                    background: 'linear-gradient(90deg, #22d3ee 0%, #2563eb 100%)',
+                    color: 'white'
+                  }
                 }}
               >
                 <Typography sx={{ textAlign: 'center', color: 'white' }}>Login</Typography>
@@ -179,7 +165,7 @@ function Navbar() {
                 variant="h5"
                 noWrap
                 component="a"
-                href="/"
+                href="/home"
                 sx={{
                   fontFamily: 'monospace',
                   fontWeight: 700,
@@ -217,16 +203,16 @@ function Navbar() {
                     px: 2.5,
                     py: 1,
                     background: isActive(page)
-                      ? 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)'
+                      ? 'linear-gradient(90deg, #5eead4 0%, #3b82f6 100%)'
                       : 'transparent',
                     boxShadow: isActive(page)
-                      ? '0 4px 16px -4px rgba(99,102,241,0.25)'
+                      ? '0 4px 16px -4px rgba(59,130,246,0.25)'
                       : 'none',
                     transition: 'all 0.25s cubic-bezier(.4,0,.2,1)',
                     '&:hover': {
-                      background: 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)',
+                      background: 'linear-gradient(90deg, #22d3ee 0%, #2563eb 100%)',
                       color: 'white',
-                      boxShadow: '0 6px 20px -6px rgba(99,102,241,0.30)',
+                      boxShadow: '0 6px 20px -6px rgba(59,130,246,0.30)',
                     },
                   }}
                 >
@@ -252,7 +238,7 @@ function Navbar() {
                   border: 'none',
                   transition: 'all 0.25s cubic-bezier(.4,0,.2,1)',
                   '&:hover': {
-                    background: 'linear-gradient(90deg, #3b82f6 0%, #5eead4 100%)', // reversed for hover
+                    background: 'linear-gradient(90deg, #22d3ee 0%, #2563eb 100%)', // reversed for hover
                     boxShadow: '0 10px 28px -8px rgba(59,130,246,0.35)',
                   },
                 }}
