@@ -16,6 +16,25 @@ const Dashboard = () => {
       iconBg: 'bg-blue-500/20'
     },
     {
+      label: 'Initiate Transfer',
+      description: 'Transfer ownership to another user',
+      icon: <FaExchangeAlt />,
+      to: '/create-transfer',
+      color: 'from-emerald-500 to-emerald-600',
+      hoverColor: 'from-emerald-400 to-emerald-600',
+      iconBg: 'bg-emerald-500/20'
+    },
+  
+  {
+    label: 'My Products',
+    description: 'View all products you own',
+    icon: <FaBoxOpen />,
+    to: '/user-products',
+    color: 'from-cyan-500 to-cyan-600',
+    hoverColor: 'from-cyan-400 to-cyan-600',
+    iconBg: 'bg-cyan-500/20'
+  },
+    {
       label: 'Get Product Info',
       description: 'View detailed product information',
       icon: <FaSearch />,
@@ -34,15 +53,6 @@ const Dashboard = () => {
       iconBg: 'bg-amber-500/20'
     },
     {
-      label: 'Initiate Transfer',
-      description: 'Transfer ownership to another user',
-      icon: <FaExchangeAlt />,
-      to: '/create-transfer',
-      color: 'from-emerald-500 to-emerald-600',
-      hoverColor: 'from-emerald-400 to-emerald-600',
-      iconBg: 'bg-emerald-500/20'
-    },
-    {
       label: 'Approve Transfers',
       description: 'Review and confirm pending transfers',
       icon: <FaListAlt />,
@@ -50,15 +60,6 @@ const Dashboard = () => {
       color: 'from-rose-500 to-rose-600',
       hoverColor: 'from-rose-400 to-rose-600',
       iconBg: 'bg-rose-500/20'
-    },
-    {
-      label: 'My Products',
-      description: 'View all products you own',
-      icon: <FaBoxOpen />,
-      to: '/user-products',
-      color: 'from-cyan-500 to-cyan-600',
-      hoverColor: 'from-cyan-400 to-cyan-600',
-      iconBg: 'bg-cyan-500/20'
     }
   ];
 

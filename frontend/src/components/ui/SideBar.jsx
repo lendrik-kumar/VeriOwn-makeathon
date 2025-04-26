@@ -50,7 +50,7 @@ const SideBar = () => {
     <div className="h-screen w-72 bg-gradient-to-b from-gray-900 via-black to-gray-900 border-r border-white/10 flex flex-col justify-between fixed left-0 top-0 z-40 overflow-hidden shadow-2xl">
       {/* Top: Logo and User */}
       <div className="flex flex-col">
-        <Link 
+        <div 
           to="/" 
           className="flex items-center justify-center gap-2 py-6 px-4 border-b border-white/10"
         >
@@ -67,7 +67,7 @@ const SideBar = () => {
           >
             VeriOwn
           </motion.span>
-        </Link>
+        </div>
 
         {/* User Profile */}
         <div className="px-4 py-4 border-b border-white/10">
