@@ -97,6 +97,9 @@ func main() {
 		authorized.GET("/api/contracts/:id/pdf", controllers.GetContractPDF)
 		authorized.GET("/api/contracts/:id/ipfs", controllers.GetContractIPFSLink)
 		authorized.POST("/api/contracts/:id/regenerate", controllers.RegenerateContractPDF)
+
+		// User related endpoints
+		authorized.GET("/api/user/info", controllers.GetUserInfo)
 	}
 
 	r.Run(":8080")

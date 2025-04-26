@@ -286,3 +286,21 @@ func GetPendingVerifications(c *gin.Context) {
 
 	c.JSON(http.StatusOK, users)
 }
+
+// GetUserInfo returns basic info about the currently authenticated user
+func GetUserInfo(c *gin.Context) {
+	userID, _ := c.Get("user_id")
+
+	var user models.User
+	if err := db.First(&user, userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"id":       user.ID,
+		"username": user.Username,
+		"role":     user.Role,
+		// add more fields if needed
+	})
+}
