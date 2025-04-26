@@ -26,6 +26,7 @@ function Login() {
       const response = await axios.post('/api/users/login', form);
       localStorage.setItem('token', response.data.token);
       setMessage('Login successful!');
+      console.log('Login successful:', response.data);
       // Navigate to dashboard or home after successful login
       setTimeout(() => navigate('/dashboard'), 1000);
     } catch (err) {
