@@ -104,3 +104,38 @@ export const getUserProducts = async () => {
     throw error.response?.data || { error: 'Failed to fetch user products' };
   }
 };
+
+export const getContractPDF = async (contractId) => {
+  try {
+    // Using responseType blob to handle PDF data
+    const response = await api.get(`/api/contracts/${contractId}/pdf`, {
+      responseType: 'blob'
+    });
+    
+    // Return blob data and create a local URL for the PDF
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    
+    return { blob, url };
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to fetch contract PDF' };
+  }
+};
+
+export const getContractIPFSLink = async (contractId) => {
+  try {
+    const response = await api.get(`/api/contracts/${contractId}/ipfs`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to fetch contract IPFS link' };
+  }
+};
+
+export const regenerateContractPDF = async (contractId) => {
+  try {
+    const response = await api.post(`/api/contracts/${contractId}/regenerate`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: 'Failed to regenerate contract PDF' };
+  }
+};

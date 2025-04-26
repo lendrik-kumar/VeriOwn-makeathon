@@ -10,8 +10,7 @@ const Footer = () => {
           {/* Brand column */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              
-              <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+              <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
                 VeriOwn
               </h2>
             </div>
@@ -81,16 +80,16 @@ const Footer = () => {
             <p className="text-gray-400 mb-2">Have a question?</p>
             <a
               href="mailto:support@proofnest.com"
-              className="text-indigo-400 hover:text-purple-400 transition-colors font-medium"
+              className="text-green-400 to-blue-500 hover:text-purple-400 transition-colors font-medium"
             >
-              support@proofnest.com
+              support@VeriOwn.com
             </a>
           </div>
         </div>
 
         <div className="border-t border-[#2e2e3a] mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} ProofNest. All rights reserved.
+            &copy; {new Date().getFullYear()} VeriOwn. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <p className="text-gray-500 text-sm">
