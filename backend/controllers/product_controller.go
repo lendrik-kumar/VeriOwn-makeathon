@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"backend/models"
+	"backend/utils"
 
 	"encoding/json"
 	"errors"
@@ -65,7 +66,24 @@ func RegisterProduct(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, product)
+	// Generate owner contract
+	contract, err := utils.GenerateOwnerContract(db, product.ID, userID.(uint), 0)
+	if err != nil {
+		fmt.Printf("Warning: Failed to generate owner contract: %v\n", err)
+	}
+
+	// Add contract info to response if created
+	response := gin.H{
+		"product": product,
+	}
+	if contract != nil {
+		response["contract"] = gin.H{
+			"contract_number": contract.ContractNumber,
+			"issued_at":       contract.CreatedAt,
+		}
+	}
+
+	c.JSON(http.StatusOK, response)
 }
 
 func GetProduct(c *gin.Context) {
@@ -151,11 +169,11 @@ func InitiateTransfer(c *gin.Context) {
 }
 
 func ConfirmTransfer(c *gin.Context) {
-	productID := c.Param("id")
+	productIDStr := c.Param("id") // Rename to avoid conflict
 	userID, _ := c.Get("user_id")
 
 	var pendingTransfer models.PendingTransfer
-	if err := db.Where("product_id = ? AND new_owner_id = ?", productID, userID).First(&pendingTransfer).Error; err != nil {
+	if err := db.Where("product_id = ? AND new_owner_id = ?", productIDStr, userID).First(&pendingTransfer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "No pending transfer found"})
 		return
 	}
@@ -177,5 +195,26 @@ func ConfirmTransfer(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Transfer confirmed"})
+	// Use the existing variable without redeclaration
+	pID := pendingTransfer.ProductID
+	newOwnerID := pendingTransfer.NewOwnerID
+	currentOwnerID := userID.(uint)
+
+	// Generate new owner contract for the transfer
+	contract, err := utils.GenerateOwnerContract(db, pID, newOwnerID, currentOwnerID)
+	if err != nil {
+		fmt.Printf("Warning: Failed to generate transfer contract: %v\n", err)
+	}
+
+	response := gin.H{
+		"message": "Transfer confirmed",
+	}
+	if contract != nil {
+		response["contract"] = gin.H{
+			"contract_number": contract.ContractNumber,
+			"issued_at":       contract.CreatedAt,
+		}
+	}
+
+	c.JSON(http.StatusOK, response)
 }
