@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserProducts, getContractPDF, getContractIPFSLink, regenerateContractPDF } from '../../utils/ApiServices';
 import { Link } from 'react-router-dom';
 import { FaFileContract, FaSyncAlt, FaBoxOpen } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const UserProducts = () => {
   const [products, setProducts] = useState([]);
