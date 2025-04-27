@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaTag, FaIndustry, FaMobileAlt, FaCheckCircle, FaArrowLeft } from 'react-icons/fa';
 import { registerProduct } from '../../utils/ApiServices';
-import { FaTag, FaIndustry, FaMobileAlt, FaCheckCircle } from 'react-icons/fa';
 
 const ProductForm = ({ onSuccess }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const ProductForm = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -44,20 +46,28 @@ const ProductForm = ({ onSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center relative">
+    <div className="min-h-screen bg-gradient-to-r from-gray-900/95 to-gray-800/90 text-gray-100 flex items-center justify-center relative">
       {/* Animated Background */}
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/30 via-gray-900 to-gray-950"></div>
-      <div className="fixed inset-0 -z-10 opacity-50">
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-gray-900 to-gray-950"></div>
+      <div className="fixed inset-0 -z-10 opacity-40">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-600 rounded-full filter blur-3xl opacity-20"></div>
         <div className="absolute top-40 -left-20 w-60 h-60 bg-purple-600 rounded-full filter blur-3xl opacity-20"></div>
         <div className="absolute bottom-40 right-20 w-60 h-60 bg-cyan-600 rounded-full filter blur-3xl opacity-20"></div>
       </div>
 
       <div className="w-full max-w-lg flex items-center justify-center">
-        <div className="overflow-hidden rounded-2xl border border-gray-700/50 backdrop-blur-xl relative shadow-xl w-full">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10"></div>
-          <div className="relative p-10">
-            <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
+        <div className="overflow-hidden rounded-3xl border border-indigo-500/20 backdrop-blur-xl relative shadow-xl w-full bg-gradient-to-r from-blue-600/10 to-indigo-700/10">
+          {/* Back Arrow */}
+          <button
+            type="button"
+            onClick={() => navigate('/dashboard')}
+            className="absolute top-5 left-5 flex items-center gap-2 px-3 py-2 rounded-full bg-gradient-to-r from-blue-600/80 to-indigo-600/80 text-white hover:from-blue-700 hover:to-indigo-700 shadow transition-all duration-200 z-10"
+          >
+            <FaArrowLeft className="text-lg" />
+            <span className="text-sm font-medium">Back</span>
+          </button>
+          <div className="relative p-10 pt-16">
+            <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-lg">
               Register New Product
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -71,64 +81,67 @@ const ProductForm = ({ onSuccess }) => {
                   <FaCheckCircle className="text-green-500" /> {success}
                 </div>
               )}
-              <div className="space-y-4">
+              <div className="space-y-5">
+                {/* Serial Number */}
                 <div>
                   <label htmlFor="serial_number" className="block text-sm font-medium mb-1">
                     Serial Number
                   </label>
-                  <div className="relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaTag className="text-gray-400" />
-                    </div>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                      <FaTag className="text-blue-400" />
+                    </span>
                     <input
                       type="text"
                       id="serial_number"
                       name="serial_number"
                       value={formData.serial_number}
                       onChange={handleChange}
-                      className="block w-full pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-black/40 text-white placeholder-gray-300 transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3 rounded-2xl bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-blue-700/30 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-white placeholder-gray-400 shadow-lg transition-all duration-200 outline-none"
                       placeholder="Enter product serial number"
                       required
                       autoComplete="off"
                     />
                   </div>
                 </div>
+                {/* Manufacturer */}
                 <div>
                   <label htmlFor="manufacturer" className="block text-sm font-medium mb-1">
                     Manufacturer
                   </label>
-                  <div className="relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaIndustry className="text-gray-400" />
-                    </div>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                      <FaIndustry className="text-purple-400" />
+                    </span>
                     <input
                       type="text"
                       id="manufacturer"
                       name="manufacturer"
                       value={formData.manufacturer}
                       onChange={handleChange}
-                      className="block w-full pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-black/40 text-white placeholder-gray-300 transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3 rounded-2xl bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-purple-700/30 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-white placeholder-gray-400 shadow-lg transition-all duration-200 outline-none"
                       placeholder="Enter manufacturer name"
                       required
                       autoComplete="off"
                     />
                   </div>
                 </div>
+                {/* Model */}
                 <div>
                   <label htmlFor="model" className="block text-sm font-medium mb-1">
                     Model
                   </label>
-                  <div className="relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaMobileAlt className="text-gray-400" />
-                    </div>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                      <FaMobileAlt className="text-cyan-400" />
+                    </span>
                     <input
                       type="text"
                       id="model"
                       name="model"
                       value={formData.model}
                       onChange={handleChange}
-                      className="block w-full pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-black/40 text-white placeholder-gray-300 transition-all duration-200"
+                      className="block w-full pl-12 pr-4 py-3 rounded-2xl bg-gradient-to-r from-gray-900/80 to-gray-800/80 border border-cyan-700/30 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white placeholder-gray-400 shadow-lg transition-all duration-200 outline-none"
                       placeholder="Enter product model"
                       required
                       autoComplete="off"
@@ -140,10 +153,10 @@ const ProductForm = ({ onSuccess }) => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`w-full py-3 px-4 rounded-lg flex justify-center items-center font-semibold transition-all duration-200 shadow-lg ${
+                  className={`w-full py-3 px-4 rounded-2xl flex justify-center items-center font-semibold transition-all duration-200 shadow-lg ${
                     loading
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600'
+                      : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700'
                   }`}
                 >
                   {loading ? (

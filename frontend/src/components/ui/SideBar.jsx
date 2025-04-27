@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getUserProducts, getUserInfo } from '../../utils/ApiServices';
+import { getUserProducts } from '../../utils/ApiServices';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaBoxOpen, FaSignOutAlt, FaCube, FaSearch, FaUser, FaChevronDown } from 'react-icons/fa';
+import { FaBoxOpen, FaSignOutAlt, FaCube, FaSearch, FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SideBar = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [userInfo, setUserInfo] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,16 +18,11 @@ const SideBar = () => {
         // Fetch products
         const productRes = await getUserProducts();
         setProducts(productRes.products || []);
-        
-        // Fetch user info
-        const userRes = await getUserInfo();
-        setUserInfo(userRes);
       } catch (error) {
         setProducts([]);
       }
       setLoading(false);
     };
-    
     fetchData();
   }, []);
 
@@ -42,9 +36,6 @@ const SideBar = () => {
     product.model.toLowerCase().includes(searchTerm.toLowerCase()) || 
     product.serial_number.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const username = localStorage.getItem('username') || 'User';
-  const userInitial = username.charAt(0).toUpperCase();
 
   return (
     <div className="h-screen w-72 bg-gradient-to-b from-gray-900 via-black to-gray-900 border-r border-white/10 flex flex-col justify-between fixed left-0 top-0 z-40 overflow-hidden shadow-2xl">
@@ -63,23 +54,10 @@ const SideBar = () => {
           <motion.span 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-3xl font-extrabold bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 bg-clip-text text-transparent select-none"
+            className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 bg-clip-text text-transparent select-none"
           >
             VeriOwn
           </motion.span>
-        </div>
-
-        {/* User Profile */}
-        <div className="px-4 py-4 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-green-400 flex items-center justify-center text-black font-bold">
-              {userInitial}
-            </div>
-            <div className="flex-1">
-              <h3 className="text-white font-medium">{username}</h3>
-              <p className="text-xs text-gray-400">{userInfo?.role || 'User'}</p>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -102,7 +80,9 @@ const SideBar = () => {
           className="flex items-center justify-between mb-3 cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <h3 className="text-lg font-semibold text-gray-200">Your Products</h3>
+          <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Your Products
+          </h3>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.3 }}
@@ -134,7 +114,7 @@ const SideBar = () => {
                   {searchTerm && (
                     <button 
                       onClick={() => setSearchTerm('')}
-                      className="mt-2 text-xs text-blue-400 hover:text-blue-300"
+                      className="mt-2 text-xs bg-gradient-to-r from-blue-600/90 to-indigo-600/90 text-white font-semibold rounded-full px-3 py-1 hover:from-blue-700 hover:to-indigo-700 transition"
                     >
                       Clear search
                     </button>
@@ -152,10 +132,10 @@ const SideBar = () => {
                       >
                         <Link
                           to={`/products/${product.id}`}
-                          className={`block px-4 py-3 rounded-lg transition relative overflow-hidden group ${
+                          className={`block px-4 py-3 rounded-lg transition relative overflow-hidden group font-semibold ${
                             isActive 
-                              ? 'bg-gradient-to-r from-blue-600/70 to-green-500/70 text-white' 
-                              : 'bg-white/5 hover:bg-white/10 text-gray-100'
+                              ? 'bg-gradient-to-r from-blue-600/90 to-green-400/90 text-white' 
+                              : 'bg-white/5 hover:bg-gradient-to-r hover:from-blue-600/80 hover:to-green-400/80 text-gray-100'
                           }`}
                           title={product.model}
                         >
@@ -167,10 +147,10 @@ const SideBar = () => {
                               </div>
                             </div>
                             <div>
-                              <div className="font-medium truncate max-w-[160px]">
+                              <div className="font-medium truncate max-w-[160px] bg-gradient-to-r from-blue-400 via-cyan-400 to-green-400 bg-clip-text text-transparent">
                                 {product.model}
                               </div>
-                              <div className="text-xs text-gray-400">
+                              <div className="text-xs bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                                 {product.serial_number}
                               </div>
                             </div>
@@ -192,7 +172,7 @@ const SideBar = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white font-bold rounded-xl shadow-lg hover:shadow-blue-500/30 transition"
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600/90 to-indigo-600/90 text-white font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition"
         >
           <FaSignOutAlt /> Logout
         </motion.button>
