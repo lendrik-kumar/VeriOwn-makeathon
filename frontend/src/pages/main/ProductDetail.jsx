@@ -35,9 +35,8 @@ const ProductDetail = () => {
     };
 
     fetchProductData();
-  }, [id]); // Re-fetch if ID changes
-
-  // Format event data for display
+  }, [id]); 
+  
   const formatEventData = (event) => {
     try {
       const data = JSON.parse(event.EventData);
